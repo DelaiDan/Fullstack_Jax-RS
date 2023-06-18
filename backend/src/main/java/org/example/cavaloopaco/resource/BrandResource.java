@@ -26,6 +26,16 @@ public class BrandResource {
                 .build();
     }
 
+    @GET
+    @Path("/brands/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getVehicleById(@PathParam("id") long id) {
+        return Response
+                .ok(brandService.getBrandById(id))
+                .status(200)
+                .build();
+    }
 
     @POST
     @Path("/brands")

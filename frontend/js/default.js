@@ -17,7 +17,7 @@ dropBrands.onclick = function(){
 }
 
 //Veículos
-async function populateVehicles(){
+async function populateSelects(){
     if(!populateVehicles){
         const response = await fetch('http://localhost:8000/v1/vehicles/');
         if(response.ok){
@@ -34,6 +34,26 @@ async function populateVehicles(){
                 });
             });
             populateVehicles = true;
+        } else {
+            window.alert("ERRO na Operação!");
+        }
+    }
+
+    if(!populateBrands){
+        const response = await fetch('http://localhost:8000/v1/brands/');
+        if(response.ok){
+            const jsonData = await response.json();
+            const brandSelect = document.querySelectorAll('select[name=brands]');
+    
+            brandSelect.forEach((select) => {
+                jsonData.forEach((brand) => {
+                    let option = document.createElement('option');
+                    option.value = brand.id;
+                    option.innerText = brand.name;
+                    select.appendChild(option);
+                });
+            });
+            populateBrands = true;
         } else {
             window.alert("ERRO na Operação!");
         }
@@ -55,6 +75,8 @@ async function listAllVehicles(){
             const model = document.createElement('p');
             const brand = document.createElement('p');
             const descr = document.createElement('p');
+
+            let brandName = getBrandNameByID(vehicle.brand);
     
             li.classList.add('container');
             spec.classList.add('spec');
@@ -65,7 +87,7 @@ async function listAllVehicles(){
     
             id_vehicle.innerText = vehicle.id;
             year.innerText = vehicle.year;
-            brand.innerText = vehicle.brand;
+            brand.innerText = brandName;
             model.innerText = vehicle.model;
     
             spec.appendChild(id_vehicle);
@@ -105,6 +127,8 @@ async function getVehicleByID(){
             const model = document.createElement('p');
             const brand = document.createElement('p');
             const descr = document.createElement('p');
+
+            let brandName = await getBrandNameByID(vehicle.brand);
     
             li.classList.add('container');
             spec.classList.add('spec');
@@ -115,7 +139,7 @@ async function getVehicleByID(){
     
             id_vehicle.innerText = vehicle.id;
             year.innerText = vehicle.year;
-            brand.innerText = vehicle.brand;
+            brand.innerText = brandName;
             model.innerText = vehicle.model;
     
             spec.appendChild(id_vehicle);
@@ -136,21 +160,21 @@ async function getVehicleByID(){
 }
 
 async function removeVehicle(){
-    const idProd = document.querySelector(".remove-vehicle input[name='id_vehicle']");
+    const idVehicle = document.querySelector("#remove_vehicle");
     const msg = document.querySelector(".remove-vehicle .msg");
 
-    if(!idProd.value){
+    if(!idVehicle.value){
         window.alert("ID do Veículo inválida!");
         msg.classList.add('error');
         msg.innerText = "ID do Veículo inválida!";
     } else {
-        const response = await fetch('http://localhost:8000/v1/vehicles/' + idProd.value,{
+        const response = await fetch('http://localhost:8000/v1/vehicles/' + idVehicle.value,{
             method: "DELETE",
         });
         if(response.ok){
-            window.alert("Veículo " + idProd.value + " Deletado com SUCESSO!");
+            window.alert("Veículo " + idVehicle.value + " Deletado com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Veículo " + idProd.value + " Deletado com SUCESSO!";
+            msg.innerText = "Veículo " + idVehicle.value + " Deletado com SUCESSO!";
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -162,7 +186,7 @@ async function removeVehicle(){
 async function insertVehicle(){
     const nameVehicle = document.querySelector(".insert-vehicle input[name='name_vehicle']");
     const yearVehicle = document.querySelector(".insert-vehicle input[name='year_vehicle']");
-    const brandVehicle = document.querySelector("#add_category");
+    const brandVehicle = document.querySelector("#add_marca");
 
     const msg = document.querySelector(".insert-vehicle .msg");
 
@@ -172,9 +196,9 @@ async function insertVehicle(){
         msg.innerText = "Dados inválidos!";
     } else {
         let data = {
-            name: nameVehicle.value,
-            year: yearVehicle.value,
+            model: nameVehicle.value,
             brand: brandVehicle.value,
+            year: yearVehicle.value,
         }
         const response = await fetch('http://localhost:8000/v1/vehicles/',{
             method: "POST",
@@ -196,11 +220,11 @@ async function insertVehicle(){
     }
 }
 
-async function updateProduct(){
+async function updateVehicle(){
     const idVehicle = document.querySelector("#update_vehicle");
     const nameVehicle = document.querySelector(".update-vehicle input[name='name_vehicle']");
     const yearVehicle = document.querySelector(".update-vehicle input[name='year_vehicle']");
-    const brandVehicle = document.querySelector("#update_brand");
+    const brandVehicle = document.querySelector("#update_vehicle_brand");
 
     const msg = document.querySelector(".update-vehicle .msg");
 
@@ -210,9 +234,9 @@ async function updateProduct(){
         msg.innerText = "Dados inválidos!";
     } else {
         let data = {
-            name: nameVehicle.value,
-            year: yearVehicle.value,
+            model: nameVehicle.value,
             brand: brandVehicle.value,
+            year: yearVehicle.value,
         }
         const response = await fetch('http://localhost:8000/v1/vehicles/' + idVehicle.value,{
             method: "PUT",
@@ -235,28 +259,6 @@ async function updateProduct(){
 }
 
 //Marcas
-async function populateBrands(){
-    if(!populateBrands){
-        const response = await fetch('http://localhost:8000/v1/brands/');
-        if(response.ok){
-            const jsonData = await response.json();
-            const brandSelect = document.querySelectorAll('select[name=brands]');
-    
-            brandSelect.forEach((select) => {
-                jsonData.forEach((brand) => {
-                    let option = document.createElement('option');
-                    option.value = brand.id;
-                    option.innerText = brand.name;
-                    select.appendChild(option);
-                });
-            });
-            populateBrands = true;
-        } else {
-            window.alert("ERRO na Operação!");
-        }
-    }
-}
-
 async function listAllBrands(){
     const response = await fetch('http://localhost:8000/v1/brands/');
     if(response.ok){
@@ -290,50 +292,38 @@ async function listAllBrands(){
     }
 }
 
-async function getByID(){
-    const idProd = document.querySelector(".single-product input[name='id_prod']");
-    const msg = document.querySelector(".single-product .msg");
+async function getBrandByID(){
+    const idBrand = document.querySelector(".single-brand input[name='id_brand']");
+    const msg = document.querySelector(".single-brand .msg");
 
-    if(!idProd.value){
-        window.alert("ID do Produto inválida!");
+    if(!idBrand.value){
+        window.alert("ID da Marca inválida!");
         msg.classList.add('error');
-        msg.innerText = "ID do Produto inválida!";
+        msg.innerText = "ID da Marca inválida!";
     } else {
-        const response = await fetch('http://localhost:3001/products/' + idProd.value);
+        const response = await fetch('http://localhost:8000/v1/brands/' + idBrand.value);
         if(response.ok){
-            const product = await response.json();
+            const brand = await response.json();
             const productsContainer = document.querySelector('.products');
             productsContainer.innerHTML = '';
         
             const li = document.createElement('li');
             const spec = document.createElement('div');
-            const id_prod = document.createElement('span');
-            const category = document.createElement('span');
+            const id_brand = document.createElement('span');
             const name = document.createElement('p');
-            const price = document.createElement('p');
-            const descr = document.createElement('p');
     
-            li.classList.add('product');
+            li.classList.add('container');
             spec.classList.add('spec');
-            id_prod.classList.add('id_prod');
-            category.classList.add('category');
+            id_brand.classList.add('id_brand');
             name.classList.add('name');
-            price.classList.add('price');
-            descr.classList.add('descr');
     
-            id_prod.innerText = product.id;
-            category.innerText = product.category;
-            name.innerText = product.name;
-            price.innerText = "R$ " + product.price;
-            descr.innerText = product.description;
+            id_brand.innerText = brand.id;
+            name.innerText = brand.name;
     
-            spec.appendChild(id_prod);
-            spec.appendChild(category);
+            spec.appendChild(id_brand);
     
             li.appendChild(spec);
             li.appendChild(name);
-            li.appendChild(price);
-            li.appendChild(descr);
     
             productsContainer.appendChild(li);
         } else {
@@ -344,22 +334,22 @@ async function getByID(){
     }
 }
 
-async function removeProduct(){
-    const idProd = document.querySelector(".remove-product input[name='id_prod']");
-    const msg = document.querySelector(".remove-product .msg");
+async function removeBrand(){
+    const idBrand = document.querySelector("#remove_brand");
+    const msg = document.querySelector(".remove-brand .msg");
 
-    if(!idProd.value){
+    if(!idBrand.value){
         window.alert("ID do Produto inválida!");
         msg.classList.add('error');
         msg.innerText = "ID do Produto inválida!";
     } else {
-        const response = await fetch('http://localhost:3001/products/' + idProd.value,{
+        const response = await fetch('http://localhost:8000/v1/brands/' + idBrand.value,{
             method: "DELETE",
         });
         if(response.ok){
-            window.alert("Produto " + idProd.value + " Deletado com SUCESSO!");
+            window.alert("Marca " + idBrand.value + " Deletada com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Produto " + idProd.value + " Deletado com SUCESSO!";
+            msg.innerText = "Marca " + idBrand.value + " Deletada com SUCESSO!";
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -368,26 +358,19 @@ async function removeProduct(){
     }
 }
 
-async function insertProduct(){
-    const nameProd = document.querySelector(".insert-product input[name='name_prod']");
-    const priceProd = document.querySelector(".insert-product input[name='price_prod']");
-    const descrProd = document.querySelector(".insert-product input[name='descr_prod']");
-    const categoryProd = document.querySelector("#add_category");
-
+async function insertBrand(){
+    const nameBrand = document.querySelector(".insert-brand input[name='name_brand']");
     const msg = document.querySelector(".insert-product .msg");
 
-    if(!nameProd.value || !priceProd.value || !descrProd.value || !categoryProd.value){
+    if(!nameBrand.value){
         window.alert("Dados inválidos!");
         msg.classList.add('error');
         msg.innerText = "Dados inválidos!";
     } else {
         let data = {
-            name: nameProd.value,
-            price: priceProd.value,
-            description: descrProd.value,
-            category: categoryProd.value
+            name: nameBrand.value
         }
-        const response = await fetch('http://localhost:3001/products/',{
+        const response = await fetch('http://localhost:8000/v1/brands/',{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -395,10 +378,10 @@ async function insertProduct(){
             body: JSON.stringify(data),
         });
         if(response.ok){
-            const product = await response.json();
-            window.alert("Produto " + product.id +" Inserido com SUCESSO!");
+            const brand = await response.json();
+            window.alert("Marca " + brand.id +" Inserida com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Produto " + product.id +" Inserido com SUCESSO!";
+            msg.innerText = "Marca " + brand.id +" Inserida com SUCESSO!";
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -407,27 +390,24 @@ async function insertProduct(){
     }
 }
 
-async function updateProduct(){
-    const idProd = document.querySelector(".update-product input[name='id_prod']");
-    const nameProd = document.querySelector(".update-product input[name='name_prod']");
-    const priceProd = document.querySelector(".update-product input[name='price_prod']");
-    const descrProd = document.querySelector(".update-product input[name='descr_prod']");
-    const categoryProd = document.querySelector("#update_category");
+async function updateBrand(){
+    const idBrand = document.querySelector("#update_brand");
+    const nameBrand = document.querySelector(".update-brand input[name='name_brand']");
 
-    const msg = document.querySelector(".update-product .msg");
+    const msg = document.querySelector(".update-brand .msg");
 
-    if(!nameProd.value || !priceProd.value || !descrProd.value || !categoryProd.value){
+    console.log(idBrand.value);
+    console.log(nameBrand.value);
+
+    if(!idBrand.value || !nameBrand.value){
         window.alert("Dados inválidos!");
         msg.classList.add('error');
         msg.innerText = "Dados inválidos!";
     } else {
         let data = {
-            name: nameProd.value,
-            price: priceProd.value,
-            description: descrProd.value,
-            category: categoryProd.value
+            name: nameBrand.value
         }
-        const response = await fetch('http://localhost:3001/products/' + idProd.value,{
+        const response = await fetch('http://localhost:8000/v1/brands/' + idBrand.value,{
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -435,14 +415,28 @@ async function updateProduct(){
             body: JSON.stringify(data),
         });
         if(response.ok){
-            const product = await response.json();
-            window.alert("Produto " + product.id +" Atualizado com SUCESSO!");
+            const brand = await response.json();
+            window.alert("Marca " + brand.id +" Atualizada com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Produto " + product.id +" Atualizado com SUCESSO!";
+            msg.innerText = "Marca " + brand.id +" Atualizada com SUCESSO!";
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
             msg.innerText = "ERRO na Operação!";
+        }
+    }
+}
+
+async function getBrandNameByID(idBrand){
+    if(!idBrand){
+        window.alert("ID da Marca inválida!");
+    } else {
+        const response = await fetch('http://localhost:8000/v1/brands/' + idBrand);
+        if(response.ok){
+            const brand = await response.json();
+            return brand.name;
+        } else {
+            window.alert("ERRO na Operação!");
         }
     }
 }

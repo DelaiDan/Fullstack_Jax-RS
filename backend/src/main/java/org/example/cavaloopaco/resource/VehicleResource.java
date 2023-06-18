@@ -8,7 +8,6 @@ import jakarta.ws.rs.core.Response;
 import org.example.cavaloopaco.request.VehicleRequest;
 import org.example.cavaloopaco.service.VehicleService;
 
-
 @Path("/v1/")
 public class VehicleResource {
     @Context
