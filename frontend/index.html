@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Trabalho Final Programação WEB</title>
+</head>
+<body>
+    <header>
+        <h1>Cavalo-Opaco.com</h1>
+        <div class="subtitle">
+            <span>Frontend e API Backend JAX-RS</span>
+            <a href="https://github.com/DelaiDan">Arthur Delai</a>
+            <a href="https://github.com/DelaiDan">Miguel Capitanio</a>
+        </div>
+    </header>
+    <div class="content">
+        <div class="sidebar">
+            <div id="vehicles">
+                <div class="drop-btn" onclick="populateVehicles(); populateBrands()">Veículos</div>
+                <div class="options closed">
+                    <h3>Opções</h3>
+                    <button onclick="getAllVehicles()" class="products-all">Trazer todos Veículos</button>
+                    <div class="search">
+                        <h3>Buscar pelo ID</h3>
+                        <form onsubmit="event.preventDefault(); getVehicleByID();" class="single-vehicle">
+                            <input type="text" name="id_vehicle" placeholder="Digite o ID do Veículo">
+                            <input type="submit" value="Trazer Veículos">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                    <div class="add">
+                        <h3>Adicionar</h3>
+                        <form class="insert-vehicle" onsubmit="event.preventDefault(); insertVehicle();">
+                            <input type="text" name="name_vehicle" placeholder="Digite o Modelo do Veículo">
+                            <input type="text" name="year_vehicle" placeholder="Digite o Ano do Veículo">
+                            <select name="brands" id="add_marca">
+                                <option value="" disabled selected>Marca</option>
+                            </select>
+                            <input type="submit" value="Adicionar Veículos">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                    <div class="remove">
+                        <h3>Remover</h3>
+                        <form class="remove-vehicle" onsubmit="event.preventDefault(); removeVehicle();">
+                            <select name="vehicles" id="remove_vehicle">
+                            </select>
+                            <input type="submit" value="Remover Veículo">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                    <div class="update">
+                        <h3>Atualizar</h3>
+                        <form class="update-vehicle" onsubmit="event.preventDefault(); updateVehicle();">
+                            <select name="vehicles" id="update_vehicle">
+                                <option value="" disabled selected>Veículo</option>
+                            </select>
+                            <input type="text" name="name_vehicle" placeholder="Digite o Modelo do Veículo">
+                            <input type="text" name="year_vehicle" placeholder="Digite o Ano do Veículo">
+                            <select name="brands" id="update_brand">
+                                <option value="" disabled selected>Marca</option>
+                            </select>
+                            <input type="submit" value="Atualizar Veículo">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="brands">
+                <div class="drop-btn" onclick="populateVehicles(); populateBrands()">Marcas</div>
+                <div class="options closed">
+                    <h3>Opções</h3>
+                    <button onclick="getAllBrands()" class="products-all">Trazer todas Marcas</button>
+                    <div class="search">
+                        <h3>Buscar pelo ID</h3>
+                        <form onsubmit="event.preventDefault(); getBrandByID();" class="single-brand">
+                            <input type="text" name="id_prod" placeholder="Digite o ID da Marca">
+                            <input type="submit" value="Trazer Marca">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                    <div class="add">
+                        <h3>Adicionar</h3>
+                        <form class="insert-brand" onsubmit="event.preventDefault(); insertBrand();">
+                            <input type="text" name="name_brand" placeholder="Digite o Nome da Marca">
+                            <input type="submit" value="Adicionar Marca">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                    <div class="remove">
+                        <h3>Remover</h3>
+                        <form class="remove-brand" onsubmit="event.preventDefault(); removeBrand();">
+                            <select name="brands" id="remove_brand">
+                            </select>
+                            <input type="submit" value="Remover Marca">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                    <div class="update">
+                        <h3>Atualizar</h3>
+                        <form class="update-marca" onsubmit="event.preventDefault(); updateBrand();">
+                            <input type="text" name="id_brand" placeholder="Digite o ID da Marca">
+                            <input type="text" name="name_brand" placeholder="Digite o Nome da Marca">
+                            <input type="submit" value="Atualizar Marca">
+                            <p class="msg"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="products-display">
+            <ul class="products">
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <h1>Cavalo-Opaco.com</h1>
+        <div class="subtitle">
+            <span>Frontend e API Backend JAX-RS</span>
+            <a href="https://github.com/DelaiDan">Arthur Delai</a>
+            <a href="https://github.com/DelaiDan">Miguel Capitanio</a>
+        </div>
+    </footer>
+</body>
+<script src="js/default.js"></script>
+</html>

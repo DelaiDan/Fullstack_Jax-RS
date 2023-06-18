@@ -1,0 +1,1 @@
+docker-compose com POSTGRESQL (porta 5432) e Adminer (porta 8080) para melhor controle.

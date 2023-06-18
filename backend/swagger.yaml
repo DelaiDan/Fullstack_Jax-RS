@@ -1,0 +1,91 @@
+---
+swagger: "2.0"
+info:
+  description: Trabalho Backend JAVA
+  version: 1.0.0-oas3-oas3-oas3
+  title: API Trabalho Programação WEB - JAX-RS
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+- name: Pessoas
+  description: Mockup de API com dados de Pessoas
+paths:
+  /person:
+    get:
+      tags:
+      - Pessoas
+      summary: Retorna todas as Pessoas
+      parameters: []
+      responses:
+        "200":
+          description: Objeto com os dados das Pessoas
+    post:
+      tags:
+      - Pessoas
+      summary: Adiciona Pessoa
+      parameters:
+      - in: body
+        name: Produto
+        description: Pessoa que será criada
+        required: false
+        schema:
+          $ref: '#/definitions/Pessoa'
+      responses:
+        "201":
+          description: N/A
+  /person/{id}:
+    get:
+      tags:
+      - Pessoas
+      summary: Retorna Pessoa pelo ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Objeto com os dados das Pessoas
+    put:
+      tags:
+      - Pessoas
+      summary: Atualiza a Pessoa
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: Pessoa
+        description: Dados que serão Atualizados
+        required: false
+        schema:
+          $ref: '#/definitions/Pessoa'
+      responses:
+        "200":
+          description: Atualizado
+    delete:
+      tags:
+      - Pessoas
+      summary: Deleta a Pessoa
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Deletado
+definitions:
+  Pessoa:
+    type: object
+    properties:
+      name:
+        type: string
+      age:
+        type: integer
+      email:
+        type: string
+      telephone:
+        type: string

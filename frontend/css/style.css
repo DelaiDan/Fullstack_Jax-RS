@@ -1,0 +1,220 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    overflow-x: hidden;
+    min-height: 100%;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+}
+
+header, footer{
+    text-align: center;
+    background-color: black;
+    font-weight: bolder;
+    padding: 40px 0;
+}
+
+header > *, footer > *{
+    color: white;
+}
+
+header h1, footer h1{
+    margin-bottom: 25px;
+}
+
+footer{
+    padding-top: 15px;
+    margin-top: 25px;
+}
+
+header{
+    margin-bottom: 25px;
+}
+
+.subtitle{
+    text-align: center;
+    display: flex;
+    color: white;
+    flex-direction: column;
+}
+
+.subtitle a{
+    font-size: 24px;
+    color: white;
+    text-decoration: none;
+    transition: all 250ms ease;
+}
+
+.subtitle a:hover{
+    color: blue;
+}
+
+.content{
+    max-width: 1280px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.sidebar{
+    width: 100%;
+    max-width: 250px;
+}
+
+#vehicles, #brands{
+    margin: 15px 0;
+}
+
+.products-all{
+    width: 100%;
+}
+
+.options{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 10px 20px;
+    border: 2px solid darkblue;
+    border-radius: 10px;
+}
+
+.options > button, .options > div > form > input[type='submit'], .drop-btn{
+    cursor: pointer;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: darkblue;
+    color: white;
+    font-weight: bold;
+    transition: all 250ms ease;
+}
+
+.options > button:hover, .options > div > form > input[type='submit']:hover, .drop-btn:hover{
+    color: darkblue;
+    background-color: white;
+    border: 1px solid darkblue;
+}
+
+.options h3{
+    margin: 0 auto;
+    margin-bottom: 15px;
+    color: darkblue;
+    text-align: center;
+}
+
+.options > div{
+    margin: 10px 0;
+    width: 100%;
+}
+
+.options > div > form{
+    display: flex;
+    flex-direction: column;
+}
+
+.options > div > form > input, .options > div > form > select{
+    margin: 5px 0;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.products-all{
+    max-width: 200px;
+}
+
+.products-display{
+    margin-left: 50px;
+    width: 100%;
+    min-height: 500px;
+}
+
+.products {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.container{
+    width: 31%;
+    margin: 25px 0;
+    padding: 10px;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+
+.spec{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.spec span{
+    color: darkblue;
+    font-weight: bolder;
+}
+
+.product > p{
+    margin: 10px 0;
+}
+
+.name{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.brand{
+    font-size: 18px;
+    font-weight: bold;
+    color: darkblue;
+}
+
+
+.error{
+    max-width: 100%;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.success{
+    max-width: 100%;
+    color: green;
+    font-weight: bold;
+    text-align: center;
+}
+
+.drop-btn{
+    text-align: center;
+}
+
+.options.closed {
+    height: 0px;
+    padding: unset;
+    border: unset;
+}
+
+.options.closed > * {
+    display: none;
+    opacity: 0;
+}
