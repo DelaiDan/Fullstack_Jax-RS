@@ -75,8 +75,6 @@ async function listAllVehicles(){
             const model = document.createElement('p');
             const brand = document.createElement('p');
             const descr = document.createElement('p');
-
-            let brandName = getBrandNameByID(vehicle.brand);
     
             li.classList.add('container');
             spec.classList.add('spec');
@@ -87,7 +85,7 @@ async function listAllVehicles(){
     
             id_vehicle.innerText = vehicle.id;
             year.innerText = vehicle.year;
-            brand.innerText = brandName;
+            brand.innerText = vehicle.brand;
             model.innerText = vehicle.model;
     
             spec.appendChild(id_vehicle);
@@ -127,8 +125,6 @@ async function getVehicleByID(){
             const model = document.createElement('p');
             const brand = document.createElement('p');
             const descr = document.createElement('p');
-
-            let brandName = await getBrandNameByID(vehicle.brand);
     
             li.classList.add('container');
             spec.classList.add('spec');
@@ -139,7 +135,7 @@ async function getVehicleByID(){
     
             id_vehicle.innerText = vehicle.id;
             year.innerText = vehicle.year;
-            brand.innerText = brandName;
+            brand.innerText = vehicle.brand;
             model.innerText = vehicle.model;
     
             spec.appendChild(id_vehicle);
@@ -423,20 +419,6 @@ async function updateBrand(){
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
             msg.innerText = "ERRO na Operação!";
-        }
-    }
-}
-
-async function getBrandNameByID(idBrand){
-    if(!idBrand){
-        window.alert("ID da Marca inválida!");
-    } else {
-        const response = await fetch('http://localhost:8000/v1/brands/' + idBrand);
-        if(response.ok){
-            const brand = await response.json();
-            return brand.name;
-        } else {
-            window.alert("ERRO na Operação!");
         }
     }
 }

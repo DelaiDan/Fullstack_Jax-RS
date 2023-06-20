@@ -1,5 +1,8 @@
 package org.example.cavaloopaco.entity;
 
+import org.example.cavaloopaco.service.BrandService;
+import org.example.cavaloopaco.service.VehicleService;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -42,8 +45,10 @@ public class VehicleEntity implements Serializable{
         this.model = model;
     }
 
-    public Long getBrand() {
-        return brand;
+    public String getBrand() {
+        BrandService brandService = new BrandService();
+        String brandName = brandService.getBrandById(brand).getName();
+        return brandName;
     }
 
     public void setBrand(Long brand) {
