@@ -45,7 +45,7 @@ public class VehicleResource {
         vehicleService.postVehicle(vehicleRequest);
         return Response
                 .ok()
-                .status(200)
+                .status(201)
                 .build();
     }
 
@@ -57,7 +57,7 @@ public class VehicleResource {
         vehicleService.updateVehicle(id, vehicleRequest);
         return Response
                 .ok()
-                .status(200)
+                .status(204)
                 .build();
     }
 
@@ -70,7 +70,7 @@ public class VehicleResource {
         vehicleService.deleteVehicleById(id);
         return Response
                 .ok()
-                .status(200)
+                .status(204)
                 .build();
     }
 
