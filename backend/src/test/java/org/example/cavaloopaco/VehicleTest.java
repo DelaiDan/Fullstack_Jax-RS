@@ -23,7 +23,7 @@ public class VehicleTest extends JerseyTest {
     public void testFetchAll() {
         Response response = target("/v1/vehicles").request().get();
         assertEquals(Float.parseFloat("should return status 200"), 200, response.getStatus());
-        assertNotNull("Should return use                                             r list", response.getEntity().toString());
+        assertNotNull("Should return list", response.getEntity().toString());
 
         System.out.println(response.getStatus());
         System.out.println(response.readEntity(String.class));
@@ -33,7 +33,7 @@ public class VehicleTest extends JerseyTest {
     public void testGetById() {
         Response output = target("/v1/vehicles/1").request().get();
         assertEquals(Float.parseFloat("Should return status 200"), 200, output.getStatus());
-        assertNotNull("Should return user object as json", output.getEntity().toString());
+        assertNotNull("Should return object as json", output.getEntity().toString());
 
         System.out.println(output.getStatus());
         System.out.println(output.readEntity(String.class));

@@ -42,10 +42,11 @@ public class BrandResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postBrand(BrandRequest brandRequest) {
-        brandService.postBrand(brandRequest);
+        Long response = brandService.postBrand(brandRequest);
         return Response
                 .ok()
                 .status(200)
+                .entity(response)
                 .build();
     }
 
@@ -54,10 +55,11 @@ public class BrandResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePerson(@PathParam("id") long id, BrandRequest brandRequest) {
-        brandService.updateBrand(id, brandRequest);
+        Long response = brandService.updateBrand(id, brandRequest);
         return Response
                 .ok()
                 .status(200)
+                .entity(response)
                 .build();
     }
 
@@ -67,10 +69,11 @@ public class BrandResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteBrandById(@PathParam("id") long id) {
-        brandService.deleteBrandById(id);
+        Long response = brandService.deleteBrandById(id);
         return Response
                 .ok()
                 .status(200)
+                .entity(response)
                 .build();
     }
 

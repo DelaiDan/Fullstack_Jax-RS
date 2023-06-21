@@ -42,10 +42,11 @@ public class VehicleResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response postVehicle(VehicleRequest vehicleRequest) {
-        vehicleService.postVehicle(vehicleRequest);
+        Long response = vehicleService.postVehicle(vehicleRequest);
         return Response
                 .ok()
                 .status(201)
+                .entity(response)
                 .build();
     }
 
@@ -54,10 +55,11 @@ public class VehicleResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateVehicle(@PathParam("id") long id, VehicleRequest vehicleRequest) {
-        vehicleService.updateVehicle(id, vehicleRequest);
+        Long response = vehicleService.updateVehicle(id, vehicleRequest);
         return Response
                 .ok()
                 .status(204)
+                .entity(response)
                 .build();
     }
 
@@ -67,10 +69,11 @@ public class VehicleResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response deleteVehicleById(@PathParam("id") long id) {
-        vehicleService.deleteVehicleById(id);
+        Long response = vehicleService.deleteVehicleById(id);
         return Response
                 .ok()
                 .status(204)
+                .entity(response)
                 .build();
     }
 

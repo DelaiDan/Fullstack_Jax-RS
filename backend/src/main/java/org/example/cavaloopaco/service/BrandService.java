@@ -41,7 +41,7 @@ public class BrandService {
             entityManager.close();
         }
     }
-    public void postBrand(BrandRequest brandRequest) {
+    public Long postBrand(BrandRequest brandRequest) {
         BrandEntity brandEntity = new BrandEntity();
         EntityManager entityManager = Persistence.createEntityManagerFactory("jax-rs-trabalho").createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -50,6 +50,7 @@ public class BrandService {
             brandEntity.setName(brandRequest.getName());
             entityManager.persist(brandEntity);
             transaction.commit();
+            return brandEntity.getId();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -58,7 +59,7 @@ public class BrandService {
         }
     }
 
-    public void updateBrand(long id, BrandRequest brandRequest) {
+    public Long updateBrand(long id, BrandRequest brandRequest) {
         EntityManager entityManager = Persistence.createEntityManagerFactory("jax-rs-trabalho").createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -69,6 +70,7 @@ public class BrandService {
                 entityManager.merge(brandEntity);
             }
             transaction.commit();
+            return brandEntity.getId();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -77,16 +79,19 @@ public class BrandService {
         }
     }
 
-    public void deleteBrandById(long id) {
+    public Long deleteBrandById(long id) {
         EntityManager entityManager = Persistence.createEntityManagerFactory("jax-rs-trabalho").createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             BrandEntity brandEntity = entityManager.find(BrandEntity.class, id);
+            Long entityID = 0L;
             if (brandEntity != null) {
+                entityID = brandEntity.getId();
                 entityManager.remove(brandEntity);
             }
             transaction.commit();
+            return entityID;
         } catch (Exception e) {
             throw e;
         } finally {

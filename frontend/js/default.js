@@ -26,6 +26,7 @@ async function populateSelects(){
             const vehicleSelect = document.querySelectorAll('select[name=vehicles]');
         
             vehicleSelect.forEach((select) => {
+                select.innerHTML = '';
                 jsonData.forEach((veiculo) => {
                     let option = document.createElement('option');
                     option.value = veiculo.id;
@@ -46,6 +47,7 @@ async function populateSelects(){
             const brandSelect = document.querySelectorAll('select[name=brands]');
     
             brandSelect.forEach((select) => {
+                select.innerHTML = '';
                 jsonData.forEach((brand) => {
                     let option = document.createElement('option');
                     option.value = brand.id;
@@ -171,6 +173,9 @@ async function removeVehicle(){
             window.alert("Veículo " + idVehicle.value + " Deletado com SUCESSO!");
             msg.classList.add('success');
             msg.innerText = "Veículo " + idVehicle.value + " Deletado com SUCESSO!";
+
+            populateVehicles = false;
+            populateSelects();
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -205,9 +210,12 @@ async function insertVehicle(){
         });
         if(response.ok){
             const vehicle = await response.json();
-            window.alert("Veículo " + vehicle.id +" Inserido com SUCESSO!");
+            window.alert("Veículo " + vehicle +" Inserido com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Veículo " + vehicle.id +" Inserido com SUCESSO!";
+            msg.innerText = "Veículo " + vehicle +" Inserido com SUCESSO!";
+
+            populateVehicles = false;
+            populateSelects();
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -243,9 +251,12 @@ async function updateVehicle(){
         });
         if(response.ok){
             const vehicle = await response.json();
-            window.alert("Veículo " + vehicle.id +" Atualizado com SUCESSO!");
+            window.alert("Veículo " + vehicle +" Atualizado com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Veículo " + vehicle.id +" Atualizado com SUCESSO!";
+            msg.innerText = "Veículo " + vehicle +" Atualizado com SUCESSO!";
+
+            populateVehicles = false;
+            populateSelects();
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -346,6 +357,9 @@ async function removeBrand(){
             window.alert("Marca " + idBrand.value + " Deletada com SUCESSO!");
             msg.classList.add('success');
             msg.innerText = "Marca " + idBrand.value + " Deletada com SUCESSO!";
+
+            populateBrands = false;
+            populateSelects();
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -356,7 +370,7 @@ async function removeBrand(){
 
 async function insertBrand(){
     const nameBrand = document.querySelector(".insert-brand input[name='name_brand']");
-    const msg = document.querySelector(".insert-product .msg");
+    const msg = document.querySelector(".insert-brand .msg");
 
     if(!nameBrand.value){
         window.alert("Dados inválidos!");
@@ -375,9 +389,12 @@ async function insertBrand(){
         });
         if(response.ok){
             const brand = await response.json();
-            window.alert("Marca " + brand.id +" Inserida com SUCESSO!");
+            window.alert("Marca " + brand +" Inserida com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Marca " + brand.id +" Inserida com SUCESSO!";
+            msg.innerText = "Marca " + brand +" Inserida com SUCESSO!";
+
+            populateBrands = false;
+            populateSelects();
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');
@@ -391,9 +408,6 @@ async function updateBrand(){
     const nameBrand = document.querySelector(".update-brand input[name='name_brand']");
 
     const msg = document.querySelector(".update-brand .msg");
-
-    console.log(idBrand.value);
-    console.log(nameBrand.value);
 
     if(!idBrand.value || !nameBrand.value){
         window.alert("Dados inválidos!");
@@ -412,9 +426,12 @@ async function updateBrand(){
         });
         if(response.ok){
             const brand = await response.json();
-            window.alert("Marca " + brand.id +" Atualizada com SUCESSO!");
+            window.alert("Marca " + brand +" Atualizada com SUCESSO!");
             msg.classList.add('success');
-            msg.innerText = "Marca " + brand.id +" Atualizada com SUCESSO!";
+            msg.innerText = "Marca " + brand +" Atualizada com SUCESSO!";
+
+            populateBrands = false;
+            populateSelects();
         } else {
             window.alert("ERRO na Operação!");
             msg.classList.add('error');

@@ -41,7 +41,7 @@ public class VehicleService {
             entityManager.close();
         }
     }
-    public void postVehicle(VehicleRequest vehicleRequest) {
+    public Long postVehicle(VehicleRequest vehicleRequest) {
         VehicleEntity vehicleEntity = new VehicleEntity();
         EntityManager entityManager = Persistence.createEntityManagerFactory("jax-rs-trabalho").createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -52,6 +52,7 @@ public class VehicleService {
             vehicleEntity.setYear(vehicleRequest.getYear());
             entityManager.persist(vehicleEntity);
             transaction.commit();
+            return vehicleEntity.getId();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -60,7 +61,7 @@ public class VehicleService {
         }
     }
 
-    public void updateVehicle(long id, VehicleRequest vehicleRequest) {
+    public Long updateVehicle(long id, VehicleRequest vehicleRequest) {
         EntityManager entityManager = Persistence.createEntityManagerFactory("jax-rs-trabalho").createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
@@ -73,6 +74,7 @@ public class VehicleService {
                 entityManager.merge(vehicleEntity);
             }
             transaction.commit();
+            return vehicleEntity.getId();
         } catch (Exception e) {
             throw e;
         } finally {
@@ -81,16 +83,19 @@ public class VehicleService {
         }
     }
 
-    public void deleteVehicleById(long id) {
+    public Long deleteVehicleById(long id) {
         EntityManager entityManager = Persistence.createEntityManagerFactory("jax-rs-trabalho").createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
             VehicleEntity vehicleEntity = entityManager.find(VehicleEntity.class, id);
+            Long entityID = 0L;
             if (vehicleEntity != null) {
+                entityID = vehicleEntity.getId();
                 entityManager.remove(vehicleEntity);
             }
             transaction.commit();
+            return entityID;
         } catch (Exception e) {
             throw e;
         } finally {
