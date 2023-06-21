@@ -1,0 +1,166 @@
+---
+swagger: "2.0"
+info:
+  description: Demonstração Fullstack com JAX-RS
+  version: 1.0.0-oas3-oas3-oas3
+  title: Cavalo-Opaco.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+- name: Veículos
+  description: CRUD de Veículos
+  
+- name: Marcas
+  description: CRUD de Marcas
+
+paths:
+  /v1/vehicles:
+    get:
+      tags:
+      - Veículos
+      summary: Retorna todos os Veículos
+      parameters: []
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - Veículos
+      summary: Adiciona Veículo
+      parameters:
+      - in: body
+        name: Veículo
+        description: Veículo que será criado
+        required: false
+        schema:
+          $ref: '#/definitions/Veiculo'
+      responses:
+        "201":
+          description: ID do Veículo Criado
+  /v1/vehicles/{id}:
+    get:
+      tags:
+      - Veículos
+      summary: Retorna Veículo pelo ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+      - Veículos
+      summary: Atualiza o Veículo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: Veículo
+        description: Dados que serão Atualizados
+        required: false
+        schema:
+          $ref: '#/definitions/Veiculo'
+      responses:
+        "204":
+          description: ID do Veículo Atualizado
+    delete:
+      tags:
+      - Veículos
+      summary: Deleta o Veículo
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: ID do Veículo Deletado
+          
+  /v1/brands:
+    get:
+      tags:
+      - Marcas
+      summary: Retorna todas as Marcas
+      parameters: []
+      responses:
+        "200":
+          description: OK
+    post:
+      tags:
+      - Marcas
+      summary: Adiciona Marca
+      parameters:
+      - in: body
+        name: Marca
+        description: Marca que será criado
+        required: false
+        schema:
+          $ref: '#/definitions/Marca'
+      responses:
+        "201":
+          description: ID da Marca Criada
+  /v1/brands/{id}:
+    get:
+      tags:
+      - Marcas
+      summary: Retorna Marca pelo ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+    put:
+      tags:
+      - Marcas
+      summary: Atualiza a Marca
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - in: body
+        name: Marca
+        description: Dados que serão Atualizados
+        required: false
+        schema:
+          $ref: '#/definitions/Marca'
+      responses:
+        "204":
+          description: ID da Marca Atualizado
+    delete:
+      tags:
+      - Marcas
+      summary: Deleta a Marca
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: ID da Marca Deletada
+definitions:
+  Veiculo:
+    type: object
+    properties:
+      model:
+        type: string
+      brand:
+        type: integer
+      year:
+        type: integer
+        
+  Marca:
+    type: object
+    properties:
+      name:
+        type: string
