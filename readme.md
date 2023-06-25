@@ -21,3 +21,5 @@
     <li>Senha: password</li>
     <li>Base de Dados: trabalhoJAVA</li>
 </ul>
+
+<p>Importe o arquivo <strong>Postgre.sql</strong> contido aqui para ter a estrutura e algumas informações cadastradas!</p>
